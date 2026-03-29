@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Andrew Zhang | Chemistry Portfolio</title>
+    <meta
+      name="description"
+      content="Andrew Zhang's chemistry-themed portfolio featuring an interactive 3D molecular showcase, academic highlights, and track performance."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="boot-overlay" class="boot-overlay" aria-live="polite">
+      <div class="boot-card">
+        <p class="boot-kicker">PORTFOLIO LAB</p>
+        <p class="boot-title">Initializing molecular scene</p>
+        <p id="boot-status" class="boot-status">Reading geometry and interface modules...</p>
+        <div class="boot-meter" aria-hidden="true">
+          <span id="boot-meter-fill"></span>
+        </div>
+        <button id="boot-skip" class="boot-skip" type="button">Skip intro</button>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <header class="top-bar">
+        <div class="brand-block">
+          <p class="brand-tag">ANDREW ZHANG</p>
+          <p class="brand-subtag">LEXINGTON, MASSACHUSETTS</p>
+        </div>
+        <div class="top-center">
+          <p class="capsule">CHEMISTRY + BIOMEDICAL ENGINEERING</p>
+          <p class="molecule-tag">DOXORUBICIN (CID: 31703)</p>
+          <div class="view-mode-switch" aria-label="Visual mode switch">
+            <button id="mode-standard" class="mode-button active" type="button">STANDARD</button>
+            <button id="mode-blueprint" class="mode-button" type="button">BLUEPRINT</button>
+            <button id="mode-cyber" class="mode-button" type="button">CYBER</button>
+          </div>
+        </div>
+        <div class="time-block">
+          <p class="time-label">LOCAL TIME</p>
+          <p id="local-time" class="time-value">LEX -- --</p>
+        </div>
+      </header>
+
+      <main class="hero-layout">
+        <section class="headline-column">
+          <h1>
+            CHEMISTRY,<br />
+            BY DESIGN.
+          </h1>
+          <p class="headline-note">
+            Sophomore at Lexington High School focused on biomedical engineering,
+            chemistry, and disciplined competition.
+          </p>
+        </section>
+
+        <section class="viz-column">
+          <div id="molecule-stage" aria-label="Interactive 3D molecule visualization">
+            <canvas id="molecule-canvas"></canvas>
+            <svg id="connector-layer" aria-hidden="true"></svg>
+            <div class="stage-sweep" aria-hidden="true"></div>
+
+            <div class="stage-note">DRAG TO ROTATE • SCROLL TO ZOOM • CLICK NODE OR ATOM</div>
+
+            <div class="node-nav" aria-label="Topic navigation controls">
+              <button id="prev-topic" class="node-nav-button" type="button" aria-label="Previous topic">◀</button>
+              <button id="next-topic" class="node-nav-button" type="button" aria-label="Next topic">▶</button>
+            </div>
+
+            <div class="callout" data-topic="profile" data-side="left">
+              <button type="button" class="callout-button">
+                <span class="callout-node" aria-hidden="true"></span>
+                <span class="callout-text">ACADEMIC PROFILE</span>
+              </button>
+            </div>
+
+            <div class="callout" data-topic="competitions" data-side="right">
+              <button type="button" class="callout-button">
+                <span class="callout-node" aria-hidden="true"></span>
+                <span class="callout-text">USNCO + ASHDOWN RESULTS</span>
+              </button>
+            </div>
+
+            <div class="callout" data-topic="research" data-side="left">
+              <button type="button" class="callout-button">
+                <span class="callout-node" aria-hidden="true"></span>
+                <span class="callout-text">UCHICAGO RESEARCH</span>
+              </button>
+            </div>
+
+            <div class="callout" data-topic="leadership" data-side="right">
+              <button type="button" class="callout-button">
+                <span class="callout-node" aria-hidden="true"></span>
+                <span class="callout-text">LEADERSHIP + SERVICE</span>
+              </button>
+            </div>
+
+            <div class="callout" data-topic="athletics" data-side="right">
+              <button type="button" class="callout-button">
+                <span class="callout-node" aria-hidden="true"></span>
+                <span class="callout-text">TRACK + XC METRICS</span>
+              </button>
+            </div>
+
+            <div class="callout" data-topic="resume" data-side="left">
+              <button type="button" class="callout-button">
+                <span class="callout-node" aria-hidden="true"></span>
+                <span class="callout-text">FULL RESUME PDF</span>
+              </button>
+            </div>
+
+            <div class="ambient-chip" aria-hidden="true">+</div>
+            <div class="ambient-chip second" aria-hidden="true">+</div>
+
+            <aside class="hud-card" aria-live="polite">
+              <p class="hud-title">LAB STATUS</p>
+              <p>mode: <span id="hud-mode">STANDARD</span></p>
+              <p>focus: <span id="hud-topic">ACADEMIC PROFILE</span></p>
+              <p>molecule: doxorubicin</p>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <aside id="preview-panel" class="preview-panel" aria-live="polite">
+        <p id="preview-kicker" class="preview-kicker">NODE PREVIEW</p>
+        <p id="preview-title" class="preview-title">ACADEMIC PROFILE</p>
+        <p id="preview-text" class="preview-text"></p>
+        <div class="preview-bar" aria-hidden="true">
+          <span id="preview-progress"></span>
+        </div>
+      </aside>
+
+      <aside id="info-panel" class="info-panel" aria-live="polite">
+        <div class="panel-header">
+          <p id="panel-title">INFO NODE</p>
+          <button id="panel-close" class="close-button" type="button" aria-label="Close panel">
+            ×
+          </button>
+        </div>
+        <p id="panel-subtitle" class="panel-subtitle"></p>
+        <div id="panel-body" class="panel-body"></div>
+      </aside>
+
+      <footer class="lower-band">
+        <div class="legend-card">
+          <p>[ CORE THREADS ]</p>
+          <ul>
+            <li>01. USNCO + Ashdown Chemistry Performance</li>
+            <li>02. Computational Oncology Research (UChicago)</li>
+            <li>03. Biomedical Engineering + Chemistry Trajectory</li>
+            <li>04. Leadership, Service, and Athletic Discipline</li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
