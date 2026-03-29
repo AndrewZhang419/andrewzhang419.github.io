@@ -5,11 +5,14 @@ Interactive chemistry-themed portfolio with a custom Three.js molecular visualiz
 ## JavaScript Features
 
 - 3D chemistry model (doxorubicin, PubChem CID 31703) rendered from local SDF data.
-- Modern visual language: monochrome grid atmosphere, technical callouts, connector lines, and floating information panels.
-- Rendering controls: drag orbit, zoom, raycast atom selection, and node cycling.
+- Monochrome grid layout with connector lines and floating information panels.
+- Rendering controls:
+  - Drag to orbit
+  - Zoom
+  - Raycast atom selection
+  - Node cycling
 - Interactive labeled nodes with preview animation and rich profile popups for academics, competitions, research, leadership, athletics, and resume links.
-- Resume PDF is uploaded as a direct local asset link in the experience.
-- Responsive design.
+- Responsive design with CSS
 
 ## Run Locally
 
