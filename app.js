@@ -1,5 +1,5 @@
-import * as THREE from "https://esm.sh/three@0.161.0?target=es2022";
-import { OrbitControls } from "https://esm.sh/three@0.161.0/examples/jsm/controls/OrbitControls?target=es2022";
+import * as THREE from "./assets/vendor/three/three.module.js";
+import { OrbitControls } from "./assets/vendor/three/OrbitControls.js";
 
 const panel = document.getElementById("info-panel");
 const panelTitle = document.getElementById("panel-title");
@@ -11,6 +11,8 @@ const bootStatus = document.getElementById("boot-status");
 const bootMeterFill = document.getElementById("boot-meter-fill");
 const bootSkip = document.getElementById("boot-skip");
 const previewPanel = document.getElementById("preview-panel");
+const previewClose = document.getElementById("preview-close");
+const previewShow = document.getElementById("preview-show");
 const previewTitle = document.getElementById("preview-title");
 const previewText = document.getElementById("preview-text");
 const previewProgress = document.getElementById("preview-progress");
@@ -22,8 +24,6 @@ const modeCyberButton = document.getElementById("mode-cyber");
 const hudMode = document.getElementById("hud-mode");
 const hudTopic = document.getElementById("hud-topic");
 const timeEl = document.getElementById("local-time");
-
-document.body.classList.add("is-booting");
 
 const topicOrder = ["profile", "competitions", "research", "leadership", "athletics", "resume"];
 
@@ -69,23 +69,23 @@ const topicContent = {
   profile: {
     label: "Academic Profile",
     subtitle: "Lexington High School - Lexington, Massachusetts",
-    preview: "Honor-roll sophomore with a 3.96 GPA and a clear focus on chemistry and biomedical engineering.",
+    preview: "I am a sophomore at Lexington High School with a 3.96 GPA and a strong focus on chemistry and biomedical engineering.",
     html: `
-      <p>Andrew Zhang is a sophomore at Lexington High School in Lexington, Massachusetts. His academic work is centered on chemistry, with long-term plans in biomedical engineering.</p>
+      <p>I am a sophomore at Lexington High School in Lexington, Massachusetts. Most of my academic work is centered on chemistry, and I am building toward biomedical engineering.</p>
       <ul>
-        <li>Honor Roll in every quarter</li>
+        <li>I have earned Honor Roll every quarter.</li>
         <li><strong>Cumulative GPA:</strong> 3.96 / 4.00 (unweighted)</li>
-        <li>Planned AP coursework this year: Biology, Computer Science A, World History, and Calculus BC</li>
-        <li>Completed advanced JPH chemistry tracks, including Olympiad and organic chemistry coursework</li>
+        <li>My current AP plan includes Biology, Computer Science A, World History, and Calculus BC.</li>
+        <li>I completed advanced JPH chemistry tracks, including Olympiad and organic chemistry coursework.</li>
       </ul>
     `
   },
   competitions: {
     label: "USNCO + Ashdown",
     subtitle: "Chemistry + Science Competition Results",
-    preview: "Strong chemistry competition results, including top placements in both HMCHO and the Ashdown exam.",
+    preview: "I have focused on chemistry competition for years, with strong recent results in HMCHO and the Ashdown exam.",
     html: `
-      <p>Andrew has focused on chemistry competitions for several years, with recent results that are both consistent and nationally relevant.</p>
+      <p>I have focused on chemistry competitions for several years, and my recent results reflect that consistency.</p>
       <ul>
         <li><strong>Northeastern ACS Ashdown Exam (USNCO local):</strong> 8th out of 156 test takers, highest-scoring sophomore, Honorable Mention</li>
         <li><strong>USNCO Lexington Pre-Test:</strong> 2nd place, qualified for the March 2026 Ashdown exam</li>
@@ -99,26 +99,26 @@ const topicContent = {
   research: {
     label: "Research",
     subtitle: "Computational Oncology Internship",
-    preview: "Summer research in the Franses Lab at UChicago focused on computational oncology image analysis.",
+    preview: "I completed a summer internship in the Franses Lab at UChicago focused on computational oncology image analysis.",
     html: `
-      <p>During summer of 10th grade, Andrew completed a research internship in Dr. Joseph W. Franses's lab at the University of Chicago.</p>
+      <p>During the summer after 10th grade, I completed a research internship in Dr. Joseph W. Franses's lab at the University of Chicago.</p>
       <ul>
-        <li>Analyzed glypican-3 (GPC3) expression in hepatocellular carcinoma tissue samples</li>
-        <li>Used QuPath and related extensions to automate whole-slide image extraction and quantification</li>
-        <li>Built violin-plot visualizations comparing tumor and normal liver samples</li>
-        <li>Presented findings at a lab meeting with an emphasis on protein quantification trends</li>
+        <li>I analyzed glypican-3 (GPC3) expression in hepatocellular carcinoma tissue samples.</li>
+        <li>I used QuPath and related extensions to automate whole-slide image extraction and quantification.</li>
+        <li>I built violin-plot visualizations comparing tumor and normal liver samples.</li>
+        <li>I presented findings at a lab meeting with an emphasis on protein quantification trends.</li>
       </ul>
     `
   },
   leadership: {
     label: "Leadership + Service",
     subtitle: "School and Community Impact",
-    preview: "Leadership through teaching, community STEAM work, debate, and long-term team participation.",
+    preview: "I lead through teaching, community STEAM work, debate, and long-term team commitment.",
     html: `
-      <p>Outside the classroom, Andrew's work combines service, mentorship, and communication-intensive activities.</p>
+      <p>Outside the classroom, I focus on service, mentorship, and communication-intensive work.</p>
       <ul>
-        <li><strong>METCO Teaching Assistant:</strong> mentored incoming freshmen in science, math, and language arts</li>
-        <li><strong>Lexington Youth STEAM Team:</strong> works with Lexington's Monuments and Memorials Committee on public-facing interactive media</li>
+        <li><strong>METCO Teaching Assistant:</strong> I mentor incoming freshmen in science, math, and language arts.</li>
+        <li><strong>Lexington Youth STEAM Team:</strong> I collaborate with Lexington's Monuments and Memorials Committee on public-facing interactive media.</li>
         <li><strong>MSDL State Championship (2025):</strong> 1st place in Novice Policy Debate</li>
         <li><strong>Music:</strong> 3rd place cellist in Bay State Strings (2025) and Miclot International Music Competition (2025)</li>
       </ul>
@@ -127,9 +127,9 @@ const topicContent = {
   athletics: {
     label: "Athletics",
     subtitle: "Cross Country + Track and Field",
-    preview: "Varsity cross country and track progression across the 800m, 1000m, mile, and 2-mile events.",
+    preview: "I run varsity cross country and track, with steady progression in the 800m, 1000m, mile, and 2-mile.",
     html: `
-      <p>Andrew runs varsity cross country, indoor track, and outdoor track, with steady year-over-year improvement in middle-distance events.</p>
+      <p>I run varsity cross country, indoor track, and outdoor track, and I keep building year over year in middle-distance events.</p>
       <ul>
         <li><strong>2026 Indoor:</strong> mile PB 4:40.19, 2-mile PB 9:57.33, 1000m season best 2:51.48</li>
         <li><strong>2025 Outdoor:</strong> 800m PB 2:16.66, mile season best 4:47.49, 2-mile season best 10:32.57</li>
@@ -141,9 +141,9 @@ const topicContent = {
   resume: {
     label: "Resume",
     subtitle: "Complete Document and Supporting Links",
-    preview: "Direct access to the uploaded resume plus supporting records linked in the document.",
+    preview: "You can open my resume directly here, along with key supporting links.",
     html: `
-      <p>The full resume is available directly from the local site asset link below.</p>
+      <p>My full resume is available directly from the local site asset link below.</p>
       <ul>
         <li><a href="assets/Andrew%20Zhang%20Resume.pdf" target="_blank" rel="noreferrer">Open Resume PDF (local repository asset)</a></li>
         <li><a href="https://drive.google.com/file/d/1FOYeUuRzHAHYVF68dUNEGdGDr6JA3v1y/view" target="_blank" rel="noreferrer">Resume reference link from PDF</a></li>
@@ -567,6 +567,25 @@ let hoveredAtomTopic = null;
 let focusTopic = "profile";
 const focusTarget = new THREE.Vector3(0, 0, 0);
 let currentPreviewTopic = "";
+let previewDismissed = false;
+
+function hidePreviewPanel() {
+  previewDismissed = true;
+  previewPanel.classList.add("hidden");
+  previewShow?.classList.add("visible");
+}
+
+function showPreviewPanel() {
+  previewDismissed = false;
+  previewPanel.classList.remove("hidden");
+  previewShow?.classList.remove("visible");
+}
+
+previewClose?.addEventListener("click", hidePreviewPanel);
+previewShow?.addEventListener("click", () => {
+  showPreviewPanel();
+  triggerPreview(activeTopic, { flash: false, force: true });
+});
 
 function updateCalloutState() {
   const hoverTopic = hoveredCalloutTopic ?? hoveredAtomTopic;
@@ -604,6 +623,10 @@ function triggerPreview(topic, options = {}) {
 
   const ratio = topicOrder.indexOf(topic) / Math.max(topicOrder.length - 1, 1);
   previewProgress.style.transform = `scaleX(${1 + ratio * 2.2})`;
+
+  if (previewDismissed) {
+    return;
+  }
 
   if (flash) {
     previewPanel.classList.remove("flash");
@@ -965,6 +988,11 @@ function finishBootOverlay() {
 
 bootSkip.addEventListener("click", finishBootOverlay);
 
+const bootFailSafeTimer = setTimeout(() => {
+  setBootState(100, "Ready (fallback)");
+  finishBootOverlay();
+}, 7000);
+
 (async function init() {
   try {
     setBootState(12, "Preparing renderer and interface...");
@@ -995,9 +1023,13 @@ bootSkip.addEventListener("click", finishBootOverlay);
 
     requestAnimationFrame(animate);
   } catch (error) {
+    setBootState(100, "Initialization fallback");
+    finishBootOverlay();
     panelTitle.textContent = "Visualization Error";
     panelSubtitle.textContent = "Could not initialize molecule model";
     panelBody.innerHTML = `<p>${error instanceof Error ? error.message : "Unknown error"}</p>`;
     panel.classList.add("open");
+  } finally {
+    clearTimeout(bootFailSafeTimer);
   }
 })();

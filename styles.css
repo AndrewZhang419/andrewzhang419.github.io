@@ -201,6 +201,17 @@ body.theme-cyber {
   font-size: 0.73rem;
 }
 
+.brand-blurb {
+  margin: 1rem 0 0;
+  max-width: 34ch;
+  font-family: "Space Mono", monospace;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #202020;
+}
+
 .top-center {
   text-align: center;
   font-family: "Space Mono", monospace;
@@ -256,33 +267,9 @@ body.theme-cyber {
 .hero-layout {
   position: relative;
   z-index: 2;
-  min-height: calc(100vh - 14rem);
+  min-height: calc(100vh - 11.5rem);
   display: grid;
-  grid-template-columns: minmax(230px, 31%) 1fr;
-  gap: 0.5rem;
-}
-
-.headline-column {
-  padding-top: clamp(3.2rem, 11vh, 8rem);
-  animation: rise 0.75s ease both;
-}
-
-.headline-column h1 {
-  margin: 0;
-  font-size: clamp(2.3rem, 7.9vw, 6.2rem);
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-}
-
-.headline-note {
-  margin-top: 1.3rem;
-  max-width: 28ch;
-  border-top: 1px solid #101010;
-  padding-top: 0.78rem;
-  font-family: "Space Mono", monospace;
-  font-size: 0.86rem;
-  line-height: 1.4;
-  text-transform: uppercase;
+  grid-template-columns: 1fr;
 }
 
 .stage-note {
@@ -329,6 +316,7 @@ body.theme-cyber {
 
 .viz-column {
   position: relative;
+  min-height: calc(100vh - 12.8rem);
 }
 
 #molecule-stage {
@@ -579,6 +567,17 @@ body.theme-cyber {
   animation: rise 0.7s ease both;
 }
 
+.preview-panel.hidden {
+  display: none;
+}
+
+.preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
 .preview-kicker {
   margin: 0;
   font-family: "Space Mono", monospace;
@@ -586,6 +585,42 @@ body.theme-cyber {
   color: #5a5a5a;
   letter-spacing: 0.07em;
   text-transform: uppercase;
+}
+
+.preview-close {
+  border: 1px solid rgba(35, 35, 35, 0.45);
+  background: rgba(255, 255, 255, 0.86);
+  color: #111;
+  width: 21px;
+  height: 21px;
+  line-height: 1;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.preview-close:hover,
+.preview-close:focus-visible {
+  background: #111;
+  color: #f1f1f1;
+}
+
+.preview-show {
+  position: absolute;
+  left: clamp(1rem, 3vw, 2.8rem);
+  bottom: clamp(5.3rem, 10vh, 8rem);
+  z-index: 8;
+  border: 1px solid rgba(18, 18, 18, 0.62);
+  background: rgba(242, 242, 242, 0.93);
+  padding: 0.3rem 0.48rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  display: none;
+}
+
+.preview-show.visible {
+  display: inline-flex;
 }
 
 .preview-title {
@@ -810,26 +845,8 @@ body.theme-cyber {
 }
 
 @media (max-width: 1100px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .headline-column {
-    position: absolute;
-    top: 5.5rem;
-    left: 0;
-    max-width: min(60vw, 520px);
-    z-index: 6;
-    pointer-events: none;
-    padding-top: 0;
-  }
-
-  .headline-column h1 {
-    font-size: clamp(2.3rem, 10vw, 4.2rem);
-  }
-
-  .headline-note {
-    max-width: 32ch;
+  .viz-column {
+    min-height: calc(100vh - 13.2rem);
   }
 }
 
@@ -862,15 +879,11 @@ body.theme-cyber {
     min-height: 70vh;
   }
 
-  .headline-column {
-    position: static;
-    max-width: none;
-    margin-top: 0.3rem;
-  }
-
-  .headline-note {
-    margin-top: 0.7rem;
+  .brand-blurb {
+    margin-top: 0.62rem;
     max-width: 100%;
+    font-size: 0.67rem;
+    line-height: 1.45;
   }
 
   .viz-column {
@@ -913,6 +926,11 @@ body.theme-cyber {
     position: static;
     margin-top: 0.7rem;
     width: 100%;
+  }
+
+  .preview-show {
+    position: static;
+    margin-top: 0.55rem;
   }
 
   .lower-band {
