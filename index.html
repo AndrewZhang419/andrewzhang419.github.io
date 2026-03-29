@@ -16,7 +16,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="is-booting">
     <div id="boot-overlay" class="boot-overlay" aria-live="polite">
       <div class="boot-card">
         <p class="boot-kicker">PORTFOLIO LAB</p>
@@ -28,6 +28,20 @@
         <button id="boot-skip" class="boot-skip" type="button">Skip intro</button>
       </div>
     </div>
+
+    <script>
+      (function () {
+        var overlay = document.getElementById("boot-overlay");
+        var skip = document.getElementById("boot-skip");
+        if (!overlay || !skip) {
+          return;
+        }
+        skip.addEventListener("click", function () {
+          overlay.classList.add("hidden");
+          document.body.classList.remove("is-booting");
+        });
+      })();
+    </script>
 
     <div class="app-shell">
       <header class="top-bar">
@@ -54,7 +68,8 @@
         <section class="headline-column">
           <h1>
             CHEMISTRY,<br />
-            BY DESIGN.
+            ENGINEERING,<br />
+            AND COMPETITION.
           </h1>
           <p class="headline-note">
             Sophomore at Lexington High School focused on biomedical engineering,
@@ -78,42 +93,60 @@
             <div class="callout" data-topic="profile" data-side="left">
               <button type="button" class="callout-button">
                 <span class="callout-node" aria-hidden="true"></span>
-                <span class="callout-text">ACADEMIC PROFILE</span>
+                <span class="callout-text">
+                  <span class="callout-title">ACADEMIC PROFILE</span>
+                  <span class="callout-meta">GPA • AP PLAN • COURSEWORK</span>
+                </span>
               </button>
             </div>
 
             <div class="callout" data-topic="competitions" data-side="right">
               <button type="button" class="callout-button">
                 <span class="callout-node" aria-hidden="true"></span>
-                <span class="callout-text">USNCO + ASHDOWN RESULTS</span>
+                <span class="callout-text">
+                  <span class="callout-title">USNCO + ASHDOWN RESULTS</span>
+                  <span class="callout-meta">HMCHO • ASHDOWN • SCIENCE BOWL</span>
+                </span>
               </button>
             </div>
 
             <div class="callout" data-topic="research" data-side="left">
               <button type="button" class="callout-button">
                 <span class="callout-node" aria-hidden="true"></span>
-                <span class="callout-text">UCHICAGO RESEARCH</span>
+                <span class="callout-text">
+                  <span class="callout-title">UCHICAGO RESEARCH</span>
+                  <span class="callout-meta">ONCOLOGY • QUPATH • ANALYSIS</span>
+                </span>
               </button>
             </div>
 
             <div class="callout" data-topic="leadership" data-side="right">
               <button type="button" class="callout-button">
                 <span class="callout-node" aria-hidden="true"></span>
-                <span class="callout-text">LEADERSHIP + SERVICE</span>
+                <span class="callout-text">
+                  <span class="callout-title">LEADERSHIP + SERVICE</span>
+                  <span class="callout-meta">METCO • STEAM • DEBATE</span>
+                </span>
               </button>
             </div>
 
             <div class="callout" data-topic="athletics" data-side="right">
               <button type="button" class="callout-button">
                 <span class="callout-node" aria-hidden="true"></span>
-                <span class="callout-text">TRACK + XC METRICS</span>
+                <span class="callout-text">
+                  <span class="callout-title">TRACK + XC METRICS</span>
+                  <span class="callout-meta">MILE • 2-MILE • VARSITY</span>
+                </span>
               </button>
             </div>
 
             <div class="callout" data-topic="resume" data-side="left">
               <button type="button" class="callout-button">
                 <span class="callout-node" aria-hidden="true"></span>
-                <span class="callout-text">FULL RESUME PDF</span>
+                <span class="callout-text">
+                  <span class="callout-title">FULL RESUME PDF</span>
+                  <span class="callout-meta">SOURCE LINKS + DETAILS</span>
+                </span>
               </button>
             </div>
 

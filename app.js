@@ -1,5 +1,5 @@
-import * as THREE from "https://unpkg.com/three@0.161.0/build/three.module.js";
-import { OrbitControls } from "https://unpkg.com/three@0.161.0/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "https://esm.sh/three@0.161.0?target=es2022";
+import { OrbitControls } from "https://esm.sh/three@0.161.0/examples/jsm/controls/OrbitControls?target=es2022";
 
 const panel = document.getElementById("info-panel");
 const panelTitle = document.getElementById("panel-title");
@@ -157,27 +157,27 @@ const topicContent = {
 
 const calloutLayout = {
   profile: {
-    desktop: { x: 14.5, y: 29 },
-    mobile: { x: 23, y: 20 }
+    desktop: { x: 12.8, y: 27.2 },
+    mobile: { x: 23, y: 21 }
   },
   competitions: {
-    desktop: { x: 76, y: 18 },
-    mobile: { x: 74, y: 30 }
+    desktop: { x: 81.5, y: 15.9 },
+    mobile: { x: 77, y: 30 }
   },
   research: {
-    desktop: { x: 16, y: 60 },
-    mobile: { x: 21, y: 42 }
+    desktop: { x: 13.5, y: 53.6 },
+    mobile: { x: 22, y: 42 }
   },
   leadership: {
-    desktop: { x: 79, y: 46 },
-    mobile: { x: 76, y: 50 }
+    desktop: { x: 82.8, y: 41.2 },
+    mobile: { x: 78, y: 50 }
   },
   athletics: {
-    desktop: { x: 77, y: 68 },
-    mobile: { x: 74, y: 62 }
+    desktop: { x: 81.6, y: 64.2 },
+    mobile: { x: 77, y: 62 }
   },
   resume: {
-    desktop: { x: 21, y: 84 },
+    desktop: { x: 18.4, y: 79.2 },
     mobile: { x: 24, y: 72 }
   }
 };
@@ -728,11 +728,28 @@ window.addEventListener("keydown", (event) => {
 
 function placeCallouts() {
   const mobile = window.matchMedia("(max-width: 780px)").matches;
+  const rect = stage.getBoundingClientRect();
+  const edgeMargin = mobile ? 10 : 14;
+
   callouts.forEach((callout) => {
     const topic = callout.dataset.topic;
     const pos = mobile ? calloutLayout[topic].mobile : calloutLayout[topic].desktop;
+
+    let pxX = (pos.x / 100) * rect.width;
+    let pxY = (pos.y / 100) * rect.height;
+
+    // Set temporary position so dimensions are available for clamping.
     callout.style.left = `${pos.x}%`;
     callout.style.top = `${pos.y}%`;
+
+    const halfW = callout.offsetWidth / 2;
+    const halfH = callout.offsetHeight / 2;
+
+    pxX = Math.max(halfW + edgeMargin, Math.min(rect.width - halfW - edgeMargin, pxX));
+    pxY = Math.max(halfH + edgeMargin, Math.min(rect.height - halfH - edgeMargin, pxY));
+
+    callout.style.left = `${(pxX / rect.width) * 100}%`;
+    callout.style.top = `${(pxY / rect.height) * 100}%`;
   });
 }
 
@@ -773,15 +790,15 @@ function updateConnectors() {
 
     const atomWorld = moleculeGroup.localToWorld(atomPoints[atomIndex].clone());
     const origin = toScreen(atomWorld);
-    const dx = nodeCenter.x - origin.x;
-    const elbow = {
-      x: origin.x + dx * 0.57,
-      y: origin.y
-    };
+    const side = calloutByTopic.get(topic)?.dataset.side === "left" ? -1 : 1;
+    const horizontalTravel = Math.max(54, Math.abs(nodeCenter.x - origin.x) * 0.45);
+    const cornerX = origin.x + side * horizontalTravel;
+    const preNodeX = nodeCenter.x - side * 13;
+    const preNodeY = nodeCenter.y;
 
     connector.path.setAttribute(
       "d",
-      `M ${origin.x.toFixed(2)} ${origin.y.toFixed(2)} L ${elbow.x.toFixed(2)} ${elbow.y.toFixed(2)} L ${nodeCenter.x.toFixed(2)} ${nodeCenter.y.toFixed(2)}`
+      `M ${origin.x.toFixed(2)} ${origin.y.toFixed(2)} L ${cornerX.toFixed(2)} ${origin.y.toFixed(2)} L ${preNodeX.toFixed(2)} ${preNodeY.toFixed(2)} L ${nodeCenter.x.toFixed(2)} ${nodeCenter.y.toFixed(2)}`
     );
     connector.square.setAttribute("x", `${(origin.x - 4.5).toFixed(2)}`);
     connector.square.setAttribute("y", `${(origin.y - 4.5).toFixed(2)}`);
